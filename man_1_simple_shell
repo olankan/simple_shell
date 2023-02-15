@@ -1,0 +1,106 @@
+.TH "SIMPLE_SHELL" 1 "16 September 2020" "General Command Manual"
+.SH NAME
+.B Simple_shell
+.SH SYNOPSIS
+.B #include "holberton.h"
+.TP
+.B ./hsh -> executes
+.SH DESCRIPTION
+\fbSimple_Shell\fr is a program that provides an interface for users to get access to the kernel services, using two modes:
+.TP
+.B Interactive Mode
+.TP
+Shell takes the command from the standard input, excutes and reads another command line.
+.TP
+.B Non-interactive Mode
+.TP
+Reads commands from a file sent through a pipe, the commnads will be executed the shell stops askin for more
+.TP
+Simple_shell is fully written un C programming lanaguage using system calls that are regular C functions
+.SH ARGUMENTS
+No support for Arguments
+.SH INVOCATION
+In order to invoke this shell it is necessary to run \fb./hsh\fr command.
+.SH DEFINITIONS
+The following definitions are used throughout the rest of this document
+.TP
+.B blank
+.TP
+A space or a tab
+.TP
+.B Word
+.TP
+A sequence of characters considered as a single unit by the shell. Also known as a token. They will be accessed by the strtok C function.
+.TP
+.B name
+.TP
+a word consisting only of alphanumeric characters and underscores, and beginning with an alpahabetic character or an underscore/identifier
+.SH SHELL GRAMMAR
+A \fB simple command\fR is a sequence of optional variable assingments followed by blank seperated words and redirection and terminated by a control operator. CTRL + D or the -1 Return of a function.
+.SH RETURN VALUE
+.TP
+The return value of a \fBsimple command\fR is its exit status, for this particular Shell, the signal CTRL + D has been supressed.
+.SH VARIABLES	
+.TP
+The next variables are set by Simple_shell.
+.TP
+.B OLDPWD
+.TP
+The previous working directory as set bt the \fB cd\fR command.
+.TP
+.B PWD
+.TP
+The current work directory
+.TP
+.B PATH
+.TP
+The search path for commands. It is a colon-separated list of directories in which the shell looks for commands (see COMMAND EXECUTION below). A zero-length (null) directory name in the value of PATH indicates the current directory. A null directory name may appear as two adjacent colons, or as an initial or trailing colon. The default path is system-dependent, and is set by the administrator who installs bash. A common value is ''/usr/gnu/bin:/usr/local/bin:/usr/ucb:/bin:/usr/bin''.
+.SH COMMAND EXECUTION
+After a command has been split into words, if it results in a simple command and an optional list of arguments, the following actions are taken.
+
+If the command name contains no slashes, the shell attempts to locate it. If there exists a shell function by that name, that function is invoked. If the name does not match a function, the shell searches for it in the list of shell builtins. If a match is found, that builtin is invoked.
+
+If the name is neither a shell function nor a builtin, and contains no slashes, the Simple_shell searches each element of the PATH for a directory containing an executable file by that name
+
+.SH ENVIROMENT
+When a program is invoked it is given an array of strings called the \fB environment\fR. This is a list of \fB name-value pairs\fR, of the form \fB name=value.\fR
+.TP
+.SH EXAMPLE
+.PP
+.RS
+.BR PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+.SH EXIT STATUS
+The exit status of an executed command  is  the value returned by the waitpid system call  or  equivalent function. Exit statuses fall between  0  and  255,though,as explained  below, the shell may use values above 125  specially.
+
+Under certain circumstances, the shell will use special  values  to  indicate specific failure modes.
+
+For the Simple_shell's purposes, a command which exits with a zero exit status has succeeded.
+If  a  command  is  not  found, the child process created to execute it returns a status of 127.
+
+Shell builtin commands return a status of 0 (true) if successful, and non-zero(false) if an  error occurred  while execution.
+
+Simple_shell itself returns the exit status of the last command executed, unless a syntax  error occurs, in which case it exits with a non-zero value.   See  also the exit builtin command below.
+.SH BUILT-IN COMMANDS
+[\fBcommand\fP] [\fIarguments\fP]
+.RS
+.IP "\fBcd\fP [\fIdir\fP]"
+\- Change the current directory to \fIdir\fP.  if dir is not given, the Simple_shell will take the value of the HOME environ-value as default. Given "-", the Shell will go to the OLDPWD address into the enviroment.
+.IP "\fBexit\fP [\fIstatus\fP]"
+\- The Simple_shell will exit with a status of \fIstatus\fP.  If no status is given, the exit status is that of the last command executed.
+.IP "\fBenv\fP"
+\- Displays all the environmental variables.
+.RE
+.SH SIGNALS
+The SIG_INT (CTRL+D) signal is omitted for the Simple_shell, is it not possible to end the process through it.
+.SH SEE ALSO
+
+.SH BUGS
+No known bugs yet.
+.SH AUTHOR
+Peter Lugalia email: p.lugalia@launchpad.alx.app
+.PP
+Faith Okoth email: f.okoth@launcpad.alx.app
+
+
+ 
+ 
